@@ -1,0 +1,42 @@
+.isround{
+    border-radius: 35px;
+}
+.nameUser{
+    color: hsl(217, 71%, 53%);
+    padding-left: 25px;
+    font-weight: bold;
+    padding-top: 20px;
+}
+.name{
+    color: hsl(217, 71%, 53%);
+    padding-left: 25px;
+    font-weight: bold;
+    padding-top: 8px;
+}
+.divcenter{
+    display: flex;
+justify-content: center;
+}
+.padtex{
+    padding-top: 200px;
+}
+.textmessage{
+    padding-left: 1%;
+    padding-right: 1%;
+}
+.messagesend{
+    background-color: hsl(217, 71%, 53%); 
+    justify-content: left;
+    color: aliceblue;
+    margin-bottom: 15px !important;
+}
+.messagerecive{
+    justify-content: right;
+    margin-bottom: 15px !important;
+}
+.textarea {
+    resize: none !important
+  }
+.space{
+    margin-bottom:8em !important;
+}
