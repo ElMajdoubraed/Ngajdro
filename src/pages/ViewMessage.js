@@ -9,6 +9,7 @@ import {Card } from "react-bootstrap"
 import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import {database} from "../firebase"
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 export default function ViewMessage() {
     const { currentUser } = useAuth()
@@ -20,6 +21,7 @@ export default function ViewMessage() {
     document.title="Haya ngajdro - Message "
     const messageRef = useRef()
     const [data,setData] = useState({});
+    const [message, setMessage] = useState('')
     useEffect (()=> {
       database.ref(table0).orderByChild('date').on("value",(snapshot)=>{
           if(snapshot.val()!==null){
@@ -33,9 +35,19 @@ export default function ViewMessage() {
       };
   
   });
+  
 
-
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
  function sendMessage(){
+   
 
    if(messageRef.current.value.length > 0 ){
       database.ref(table0).push({
@@ -115,11 +127,16 @@ export default function ViewMessage() {
 <Card>
 <Card.Body>
     <div className="row textmessage">
-        <div className="col-10 col-xl-11">
+        <div className="col-10 col-xl-10">
                    <textarea id="message" wrap="none" name="message" ref={messageRef} minLength={1} rows={1} className="input is-rounded mb-3 textarea" type="text" placeholder="Message ..." required>
                 </textarea>
                 </div>
-                <div className="col-1">
+                <div className="col-2">
+                <p>Microphone: {listening ? 'on' : 'off'}</p>
+               <button onClick={SpeechRecognition.startListening}>Start</button>
+               <button onClick={SpeechRecognition.stopListening}>Stop</button>
+               <button onClick={resetTranscript}>Reset</button>
+      <p>{transcript}</p>
                 <IconButton onClick={sendMessage} edge="end" aria-label="Send message">
                 <SendIcon fontSize="large" color="primary"/>
               </IconButton>
